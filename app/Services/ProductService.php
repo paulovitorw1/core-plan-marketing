@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
+use App\Http\Requests\ProductRulesRequest;
+use App\Repositories\ProductRepository;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -36,37 +36,62 @@ class ProductService
     }
 
     /**
-     * Retrieve all products.
+     * Create a new product.
      *
-     * @return \Illuminate\Support\Collection
+     * @param  \App\Http\Requests\ProductRulesRequest  $product  The request object containing the product data.
+     * @return \Illuminate\Database\Eloquent\Model  The created product model.
      */
-    public function create(Request $request)
+    public function create(ProductRulesRequest $product)
     {
-        $this->productValidation($request);
-        
-        $products = $this->productRepository->getAll();
-        return $products->map(function ($product) {
-            return [
-                'id' => $product->id,
-                'name' => $product->name,
-                'description' => $product->description,
-                'voltage' => $product->voltage,
-                'productBrand' => $product->productBrand->name
-            ];
-        });
+        $mappedData = [
+            'id' => Str::uuid()->toString(),
+            'name' => $product->name,
+            'product_brand_id' => "3f64a5f6-a63d-499e-8627-d76907e5c3a5",
+            'description' => $product->description,
+            'voltage' => $product->voltage,
+        ];
+
+        return $this->productRepository->create($mappedData);
     }
 
     /**
-     * Retrieve all products.
+     * Get a product by its ID.
      *
-     * @return \Illuminate\Support\Collection
+     * @param  String  $id  The ID of the product.
+     * @return \Illuminate\Database\Eloquent\Model|null  The product model, or null if not found.
      */
-    private function productValidation($data)
+    public function getById($id)
     {
-        return $validator = Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:8',
-        ]);
+        return $this->productRepository->getById($id);
+    }
+
+    /**
+     * Create a new product.
+     *
+     * @param  \App\Http\Requests\ProductRulesRequest  $product  The request object containing the product data.
+     * @return \Illuminate\Database\Eloquent\Model  The created product model.
+     */
+    public function update(ProductRulesRequest $product, $id)
+    {
+        $mappedData = [
+            'id' => $id,
+            'name' => $product->name,
+            'product_brand_id' => $product->productBrand,
+            'description' => $product->description,
+            'voltage' => $product->voltage,
+        ];
+
+        return $this->productRepository->update($id, $mappedData);
+    }
+
+    /**
+     * Delete a product by its ID.
+     *
+     * @param  String  $id  The ID of the product.
+     * @return \Illuminate\Database\Eloquent\Model|null  The product model, or null if not found.
+     */
+    public function delete($id)
+    {
+        return $this->productRepository->delete($id);
     }
 }

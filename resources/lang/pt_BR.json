@@ -131,5 +131,7 @@
   "results": "resultados",
   "to": "até",
   "Product successfully created": "Produto criado com sucesso.",
-  "Product successfully listed": "Produto listado com sucesso."
+  "Products successfully listed": "Produtos listado com sucesso.",
+  "Product successfully updated": "Produtos listado com sucesso.",
+  "Product successfully deleted": "Produtos listado com sucesso."
 }
