@@ -21,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('product', ProductController::class);
 
+// Route::patch('product/{id}', [ProductController::class, 'update']);
 
+Route::post('/api/product/{id}', 'ProductController@update')->name('admin.userType.store');
