@@ -46,7 +46,7 @@ class ProductService
         $mappedData = [
             'id' => Str::uuid()->toString(),
             'name' => $product->name,
-            'product_brand_id' => "3f64a5f6-a63d-499e-8627-d76907e5c3a5",
+            'product_brand_id' => $product->productBrand,
             'description' => $product->description,
             'voltage' => $product->voltage,
         ];
@@ -62,7 +62,17 @@ class ProductService
      */
     public function getById($id)
     {
-        return $this->productRepository->getById($id);
+        $productById = $this->productRepository->getById($id);
+        return [
+            'id' => $productById->id,
+            'name' => $productById->name,
+            'description' => $productById->description,
+            'voltage' => $productById->voltage,
+            'productBrand' => [
+                'id' => $productById->productBrand->id,
+                'name' => $productById->productBrand->name
+            ]
+        ];
     }
 
     /**
