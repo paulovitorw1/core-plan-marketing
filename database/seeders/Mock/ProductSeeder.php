@@ -24,6 +24,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Teste 01',
                 'description' => 'Este produto é totalmente versátil. Tudo para ser personalizado para comportar o que você preferir.',
                 'voltage' => "220V",
+                'url_image_product' => "imageDefault.png",
                 'created_at' => $now,
                 'updated_at' => $now
             ],
@@ -32,22 +33,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Teste 02',
                 'description' => 'Este produto é totalmente versátil. Tudo para ser personalizado para comportar o que você preferir.',
                 'voltage' => "220V",
-                'created_at' => $now,
-                'updated_at' => $now
-            ],
-            [
-                'id' => Str::uuid(), 'product_brand_id' => '3f64a5f6-a63d-499e-8627-d76907e5c3a5',
-                'name' => 'Teste 03',
-                'description' => 'Este produto é totalmente versátil. Tudo para ser personalizado para comportar o que você preferir.',
-                'voltage' => "220V",
-                'created_at' => $now,
-                'updated_at' => $now
-            ],
-            [
-                'id' => Str::uuid(), 'product_brand_id' => '3f64a5f6-a63d-499e-8627-d76907e5c3a5',
-                'name' => 'Teste 04',
-                'description' => 'Este produto é totalmente versátil. Tudo para ser personalizado para comportar o que você preferir.',
-                'voltage' => "220V",
+                'url_image_product' => "imageDefault.png",
                 'created_at' => $now,
                 'updated_at' => $now
             ],
