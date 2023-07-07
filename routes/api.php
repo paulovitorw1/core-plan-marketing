@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('product', ProductController::class);
 
-// Route::patch('product/{id}', [ProductController::class, 'update']);
-
-Route::post('/api/product/{id}', 'ProductController@update')->name('admin.userType.store');
+Route::get('brand', [ProductBrandController::class, 'index']);

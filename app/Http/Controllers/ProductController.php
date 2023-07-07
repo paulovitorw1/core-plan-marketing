@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers\Response;
 use App\Http\Requests\ProductRulesRequest;
 use App\Services\ProductService;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -19,7 +18,7 @@ class ProductController extends Controller
     {
         try {
             $products = $productService->getAll();
-            return Response::json($products, __('Product successfully listed'), 200);
+            return Response::json($products, __('Products successfully listed'), 200);
         } catch (\Exception $e) {
             return Response::exception($e);
         }
@@ -53,7 +52,7 @@ class ProductController extends Controller
     {
         try {
             $product = $service->getById($id);
-            return Response::json($product, __('Products successfully listed'), 200);
+            return Response::json($product, __('Product successfully listed'), 200);
         } catch (\Exception $e) {
             return Response::exception($e);
         }
@@ -71,7 +70,7 @@ class ProductController extends Controller
     {
         try {
             $product = $service->update($request, $id);
-            return Response::json($product, __('Products successfully updated'), 200);
+            return Response::json($product, __('Product successfully updated'), 200);
         } catch (\Exception $e) {
             return Response::exception($e);
         }
@@ -88,7 +87,7 @@ class ProductController extends Controller
     {
         try {
             $product = $service->delete($id);
-            return Response::json($product, __('Products successfully deleted'), 200);
+            return Response::json($product, __('Product successfully deleted'), 200);
         } catch (\Exception $e) {
             return Response::exception($e);
         }

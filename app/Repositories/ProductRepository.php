@@ -23,7 +23,7 @@ class ProductRepository
      */
     public function getById($id)
     {
-        return Product::find($id);
+        return Product::with('productBrand')->find($id);
     }
 
     /**
