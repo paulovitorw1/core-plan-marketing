@@ -30,7 +30,8 @@ class ProductService
                 'name' => $product->name,
                 'description' => $product->description,
                 'voltage' => $product->voltage,
-                'productBrand' => $product->productBrand->name
+                'productBrand' => $product->productBrand->name,
+                'imageProduct' => 'image_product/' . $product->url_image_product
             ];
         });
     }
@@ -49,8 +50,8 @@ class ProductService
             'product_brand_id' => $product->productBrand,
             'description' => $product->description,
             'voltage' => $product->voltage,
+            'url_image_product' => $this->setImage($product->imageProduct)
         ];
-
         return $this->productRepository->create($mappedData);
     }
 
@@ -71,7 +72,8 @@ class ProductService
             'productBrand' => [
                 'id' => $productById->productBrand->id,
                 'name' => $productById->productBrand->name
-            ]
+            ],
+            'imageProductURL' => 'image_product/' . $productById->url_image_product
         ];
     }
 
@@ -83,6 +85,8 @@ class ProductService
      */
     public function update(ProductRulesRequest $product, $id)
     {
+        $existingProduct = $this->productRepository->getUrlImageById($id);
+        $filenameRequest = substr($product->imageProductURL, strrpos($product->imageProductURL, '/') + 1);
         $mappedData = [
             'id' => $id,
             'name' => $product->name,
@@ -90,7 +94,11 @@ class ProductService
             'description' => $product->description,
             'voltage' => $product->voltage,
         ];
-
+        if ($filenameRequest == $existingProduct) {
+            unset($mappedData['url_image_product']);
+        }else {
+            $mappedData['url_image_product'] = $this->setImage($product->imageProduct);
+        }
         return $this->productRepository->update($id, $mappedData);
     }
 
@@ -103,5 +111,25 @@ class ProductService
     public function delete($id)
     {
         return $this->productRepository->delete($id);
+    }
+
+    /**
+
+     *Set the image file for the product.
+
+     *@param mixed $productImage The uploaded image file or request object containing the image file.
+
+     *@return string The uploaded image file path or the default image file path if no file is provided.
+     */
+    public function setImage($productImage)
+    {
+        $uploadNameFile = "imageDefault.png";
+        if ($productImage->isValid('imageProduct')) {
+            $nameFile = Str::uuid()->toString() . '.' . $productImage->getClientOriginalExtension();
+            $destinationPath = public_path('/image_product');
+            $productImage->move($destinationPath, $nameFile);
+            $uploadNameFile = $nameFile;
+        }
+        return $uploadNameFile;
     }
 }

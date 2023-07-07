@@ -15,6 +15,7 @@ class ProductRepository
     {
         return Product::with('productBrand')->get();
     }
+
     /**
      * Retrieve a specific product by ID.
      *
@@ -25,7 +26,22 @@ class ProductRepository
     {
         return Product::with('productBrand')->find($id);
     }
+    /**
+     * Retrieve a specific product image by ID.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function getUrlImageById($id)
+    {
+        $product = Product::find($id);
 
+        if ($product) {
+            return $product->url_image_product;
+        }
+
+        return null;
+    }
     /**
      * Create a new product.
      *

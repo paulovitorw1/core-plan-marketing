@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\ApiRequest;
+use Illuminate\Validation\Rule;
 
 class ProductRulesRequest extends ApiRequest
 {
@@ -14,12 +15,14 @@ class ProductRulesRequest extends ApiRequest
     public function rules()
     {
         $validation = [
+            'imageProduct' => 'required_if:imageProductURL,==,null|nullable',
             'name' => 'required|min:5',
             'productBrand' => 'required',
             'description' => 'required|min:8',
             'voltage' => 'required',
+            'imageProductURL' => 'nullable'
         ];
-
+    
         return $validation;
     }
 }
